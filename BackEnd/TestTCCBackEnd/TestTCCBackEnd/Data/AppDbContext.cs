@@ -110,16 +110,16 @@ public class AppDbContext : DbContext
         );
 
         modelBuilder.Entity<Document>().HasData(
-            new Document { Id = 1,  DocumentNo = "DOC-2025-001", Title = "ขอจัดซื้อคอมพิวเตอร์",         RequestedBy = "สมชาย ใจดี",    RequestedAt = new DateTime(2025, 3, 1), Status = ApprovalStatus.Pending },
-            new Document { Id = 2,  DocumentNo = "DOC-2025-002", Title = "ขอจัดซื้อเครื่องพิมพ์",         RequestedBy = "สมหญิง รักดี",  RequestedAt = new DateTime(2025, 3, 2), Status = ApprovalStatus.Approved, ApprovedBy = "ผู้จัดการ", ApprovedAt = new DateTime(2025, 3, 3), Remark = "อนุมัติตามที่ขอ" },
-            new Document { Id = 3,  DocumentNo = "DOC-2025-003", Title = "ขออนุมัติเดินทางต่างจังหวัด",    RequestedBy = "ประเสริฐ มั่นคง", RequestedAt = new DateTime(2025, 3, 3), Status = ApprovalStatus.Rejected, ApprovedBy = "ผู้จัดการ", ApprovedAt = new DateTime(2025, 3, 4), Remark = "งบประมาณไม่เพียงพอ" },
-            new Document { Id = 4,  DocumentNo = "DOC-2025-004", Title = "ขอจัดซื้อโต๊ะทำงาน",            RequestedBy = "มานี มีสุข",    RequestedAt = new DateTime(2025, 3, 4), Status = ApprovalStatus.Pending },
-            new Document { Id = 5,  DocumentNo = "DOC-2025-005", Title = "ขออนุมัติค่าล่วงเวลา",          RequestedBy = "วิชัย ขยันดี",  RequestedAt = new DateTime(2025, 3, 5), Status = ApprovalStatus.Approved, ApprovedBy = "ผู้จัดการ", ApprovedAt = new DateTime(2025, 3, 6), Remark = "อนุมัติ OT เดือนมีนาคม" },
-            new Document { Id = 6,  DocumentNo = "DOC-2025-006", Title = "ขอจัดซื้อกล้องวงจรปิด",         RequestedBy = "สุดา สวยงาม",   RequestedAt = new DateTime(2025, 3, 6), Status = ApprovalStatus.Pending },
-            new Document { Id = 7,  DocumentNo = "DOC-2025-007", Title = "ขออนุมัติใช้รถยนต์ราชการ",      RequestedBy = "อนันต์ ตั้งใจ", RequestedAt = new DateTime(2025, 3, 7), Status = ApprovalStatus.Rejected, ApprovedBy = "ผู้จัดการ", ApprovedAt = new DateTime(2025, 3, 8), Remark = "รถไม่ว่าง" },
-            new Document { Id = 8,  DocumentNo = "DOC-2025-008", Title = "ขอจัดซื้อวัสดุสำนักงาน",        RequestedBy = "จิตรา แจ่มใส",  RequestedAt = new DateTime(2025, 3, 8), Status = ApprovalStatus.Pending },
-            new Document { Id = 9,  DocumentNo = "DOC-2025-009", Title = "ขออนุมัติฝึกอบรมพนักงาน",       RequestedBy = "ธนา มั่งมี",    RequestedAt = new DateTime(2025, 3, 9), Status = ApprovalStatus.Approved, ApprovedBy = "ผู้จัดการ", ApprovedAt = new DateTime(2025, 3, 10), Remark = "อนุมัติ 5 คน" },
-            new Document { Id = 10, DocumentNo = "DOC-2025-010", Title = "ขอจัดซื้อซอฟต์แวร์",            RequestedBy = "ปัญญา เก่งกาจ", RequestedAt = new DateTime(2025, 3, 10), Status = ApprovalStatus.Pending }
+            new Document { Id = 1,  DocumentNo = "DOC-2025-001", Title = "ขอจัดซื้อคอมพิวเตอร์", RequestedBy = "สมชาย ใจดี", RequestedAt = new DateTime(2025, 3, 1), Status = ApprovalStatus.Pending },
+            new Document { Id = 2,  DocumentNo = "DOC-2025-002", Title = "ขอจัดซื้อเครื่องพิมพ์", RequestedBy = "สมหญิง รักดี",   RequestedAt = new DateTime(2025, 3, 1), Status = ApprovalStatus.Pending },
+            new Document { Id = 3,  DocumentNo = "DOC-2025-003", Title = "ขออนุมัติเดินทางต่างจังหวัด", RequestedBy = "ประเสริฐ มั่นคง",  RequestedAt = new DateTime(2025, 3, 1), Status = ApprovalStatus.Pending},
+            new Document { Id = 4,  DocumentNo = "DOC-2025-004", Title = "ขอจัดซื้อโต๊ะทำงาน", RequestedBy = "มานี มีสุข",    RequestedAt = new DateTime(2025, 3, 4), Status = ApprovalStatus.Pending },
+            new Document { Id = 5,  DocumentNo = "DOC-2025-005", Title = "ขออนุมัติค่าล่วงเวลา", RequestedBy = "วิชัย ขยันดี",  RequestedAt = new DateTime(2025, 3, 5), Status = ApprovalStatus.Pending},
+            new Document { Id = 6,  DocumentNo = "DOC-2025-006", Title = "ขอจัดซื้อกล้องวงจรปิด", RequestedBy = "สุดา สวยงาม",   RequestedAt = new DateTime(2025, 3, 6), Status = ApprovalStatus.Pending },
+            new Document { Id = 7,  DocumentNo = "DOC-2025-007", Title = "ขออนุมัติใช้รถยนต์ราชการ", RequestedBy = "อนันต์ ตั้งใจ", RequestedAt = new DateTime(2025, 3, 7), Status = ApprovalStatus.Pending},
+            new Document { Id = 8,  DocumentNo = "DOC-2025-008", Title = "ขอจัดซื้อวัสดุสำนักงาน", RequestedBy = "จิตรา แจ่มใส",  RequestedAt = new DateTime(2025, 3, 8), Status = ApprovalStatus.Pending },
+            new Document { Id = 9,  DocumentNo = "DOC-2025-009", Title = "ขออนุมัติฝึกอบรมพนักงาน", RequestedBy = "ธนา มั่งมี",    RequestedAt = new DateTime(2025, 3, 9), Status = ApprovalStatus.Pending},
+            new Document { Id = 10, DocumentNo = "DOC-2025-010", Title = "ขอจัดซื้อซอฟต์แวร์", RequestedBy = "ปัญญา เก่งกาจ", RequestedAt = new DateTime(2025, 3, 10), Status = ApprovalStatus.Pending }
         );
     }
 }
