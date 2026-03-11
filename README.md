@@ -7,19 +7,122 @@
 
 Frontend และ Backend เชื่อมกันผ่าน REST API โดยฝั่ง Angular ใช้ base URL `http://localhost:5228/api` และมี `proxy.conf.json` สำหรับตอนพัฒนา
 
-## Architecture Diagram
+## Er Diagram
 
 ```mermaid
-flowchart LR
-    U[User] --> FE[Angular Frontend]
-    FE --> P[Presentation Pages]
-    P --> UC[Use Cases]
-    UC --> REPO[Repositories]
-    REPO --> API[ASP.NET Core Web API]
-    API --> C[Controllers]
-    C --> S[Services]
-    S --> DBCTX[AppDbContext / EF Core]
-    DBCTX --> DB[(SQLite app.db)]
+erDiagram
+    PERSON {
+        int Id PK
+        string FirstName
+        string LastName
+        date BirthDate
+        string Address
+    }
+
+    USER {
+        int Id PK
+        string Username
+        string PasswordHash
+        datetime CreatedAt
+    }
+
+    DOCUMENT {
+        int Id PK
+        string DocumentNo
+        string Title
+        string RequestedBy
+        datetime RequestedAt
+        int Status
+        string ApprovedBy
+        datetime ApprovedAt
+        string Remark
+    }
+
+    OCCUPATION {
+        int Id PK
+        string Name
+    }
+
+    MEMBER {
+        int Id PK
+        string FirstName
+        string LastName
+        string Email
+        string Phone
+        string ProfileBase64
+        date BirthDay
+        int OccupationId FK
+        int Sex
+        datetime CreatedAt
+    }
+
+    QUEUE_STATE {
+        int Id PK
+        int CurrentIndex
+        datetime LastUpdated
+    }
+
+    PRODUCT_CODE {
+        int Id PK
+        string Code
+        datetime CreatedAt
+    }
+
+    SERIAL_CODE {
+        int Id PK
+        string Code
+        datetime CreatedAt
+    }
+
+    EXAM_QUESTION {
+        int Id PK
+        int QuestionNo
+        string QuestionText
+        string ChoiceA
+        string ChoiceB
+        string ChoiceC
+        string ChoiceD
+        string CorrectChoice
+        datetime CreatedAt
+    }
+
+    EXAM_SESSION {
+        int Id PK
+        string ExamineeName
+        int Score
+        int TotalQuestions
+        datetime TakenAt
+    }
+
+    EXAM_SESSION_ANSWER {
+        int Id PK
+        int ExamSessionId FK
+        int QuestionId FK
+        string SelectedChoice
+        bool IsCorrect
+    }
+
+    POST {
+        int Id PK
+        string Username
+        string ImageBase64
+        string Content
+        datetime CreatedAt
+    }
+
+    COMMENT {
+        int Id PK
+        int PostId FK
+        string Username
+        string CommentText
+        datetime CreatedAt
+    }
+
+    OCCUPATION ||--o{ MEMBER : has
+    POST ||--o{ COMMENT : has
+    EXAM_SESSION ||--o{ EXAM_SESSION_ANSWER : has
+    EXAM_QUESTION ||--o{ EXAM_SESSION_ANSWER : referenced_by
+
 ```
 
 
