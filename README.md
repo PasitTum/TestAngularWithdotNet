@@ -1,10 +1,31 @@
 # Test TCC Project
 
-โปรเจกต์นี้แยกเป็น 2 ส่วนชัดเจน
+โปรเจกต์นี้แยกเป็น 2 ส่วนหลัก
 
-- `FrontEnd/TestTCCFrontEnd` เป็น Angular 19 แบบ standalone component
-- `BackEnd/TestTCCBackEnd/TestTCCBackEnd` เป็น ASP.NET Core Web API บน .NET 8
+- `FrontEnd/TestTCCFrontEnd` เป็น Angular 19 สำหรับส่วนหน้าบ้าน
+- `BackEnd/TestTCCBackEnd/TestTCCBackEnd` เป็น ASP.NET Core Web API บน .NET 8 สำหรับส่วนหลังบ้าน
 
+Frontend และ Backend เชื่อมกันผ่าน REST API โดยฝั่ง Angular ใช้ base URL `http://localhost:5228/api` และมี `proxy.conf.json` สำหรับตอนพัฒนา
+
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    U[User] --> FE[Angular Frontend]
+    FE --> P[Presentation Pages]
+    P --> UC[Use Cases]
+    UC --> REPO[Repositories]
+    REPO --> API[ASP.NET Core Web API]
+    API --> C[Controllers]
+    C --> S[Services]
+    S --> DBCTX[AppDbContext / EF Core]
+    DBCTX --> DB[(SQLite app.db)]
+```
+
+
+## โครงสร้าง Frontend
+
+Frontend ใช้ Angular 19 แบบ standalone components 
 
 ### โครงสร้างหลัก
 
@@ -38,20 +59,20 @@ route หลักอยู่ใน `src/app/app.routes.ts`
 
 - `/` หน้าเมนูหลัก
 - `/it01` จัดการข้อมูลบุคคล
-- `/it02/login`, `/it02/register`, `/it02/welcome` ระบบ auth
-- `/it03` อนุมัติ/ปฏิเสธเอกสาร
-- `/it04` ฟอร์มสมัครสมาชิก/บันทึกข้อมูลสมาชิก
+- `/it02/login`, `/it02/register`, `/it02/welcome` ระบบสมัครสมาชิกและ login
+- `/it03` อนุมัติหรือปฏิเสธเอกสาร
+- `/it04` ฟอร์มสมัครสมาชิก
 - `/it05`, `/it05/ticket`, `/it05/reset` ระบบคิว
 - `/it06` จัดการ product code และแสดง barcode
 - `/it07` จัดการ serial code และแสดง QR code
 - `/it08` ดูโพสต์และเพิ่มคอมเมนต์
-- `/it09`, `/it09/add` จัดการคลังข้อสอบ
+- `/it09`, `/it09/add` จัดการข้อสอบ
 - `/it10` ทำข้อสอบและส่งคำตอบ
 
 
 ## โครงสร้าง Backend
 
-Backend เป็น ASP.NET Core Web API บน .NET 8 ใช้ EF Core + SQLite + JWT Authentication
+Backend เป็น ASP.NET Core Web API บน .NET 8 ใช้ EF Core, SQLite และ JWT Authentication
 
 ### โครงสร้างหลัก
 
@@ -61,7 +82,6 @@ BackEnd/TestTCCBackEnd/TestTCCBackEnd/
 ├─ Data/
 ├─ DTOs/
 ├─ Models/
-├─ IServices/
 ├─ Services/
 ├─ Properties/
 ├─ Program.cs
@@ -69,20 +89,20 @@ BackEnd/TestTCCBackEnd/TestTCCBackEnd/
 └─ app.db
 ```
 
-### Service registration และ middleware
+### การตั้งค่าหลักใน Backend
 
-`Program.cs` ทำหน้าที่หลักดังนี้
+`Program.cs` ทำหน้าที่สำคัญดังนี้
 
 - ลงทะเบียน `AppDbContext` ให้ใช้ SQLite
-- ลงทะเบียน service ของแต่ละโมดูลผ่าน DI
+- ลงทะเบียน service ผ่าน dependency injection
 - เปิดใช้ JWT Bearer authentication
 - เปิด CORS แบบ allow all
 - เปิด Swagger ใน Development
-- เรียก `Database.EnsureCreated()` ตอน startup เพื่อสร้างฐานข้อมูลอัตโนมัติถ้ายังไม่มี
+- เรียก `Database.EnsureCreated()` ตอน startup
 
-### โมเดลข้อมูลสำคัญ
+### โมเดลข้อมูลหลัก
 
-ใน `AppDbContext` มี `DbSet` หลักดังนี้
+ใน `AppDbContext` มี `DbSet` สำคัญดังนี้
 
 - `Persons`
 - `Users`
@@ -98,54 +118,39 @@ BackEnd/TestTCCBackEnd/TestTCCBackEnd/
 - `ExamSessions`
 - `ExamSessionAnswers`
 
+ระบบมีการ seed ข้อมูลตั้งต้นบางส่วน เช่น ข้อสอบตัวอย่าง, โพสต์ตัวอย่าง, เอกสารตัวอย่าง, occupation และสถานะคิวเริ่มต้น
 
-### กลุ่ม API หลัก
+## กลุ่ม API หลัก
 
-จาก controller ที่มีอยู่ ปัจจุบัน backend รองรับ endpoint กลุ่มนี้
-
-- `AuthController`
-  - `POST /api/Auth/register`
-  - `POST /api/Auth/login`
-- `PersonsController`
-  - `GET /api/persons`
-  - `GET /api/persons/{id}`
-  - `POST /api/persons`
-- `DocumentsController`
-  - `GET /api/documents`
-  - `POST /api/documents/approve`
-  - `POST /api/documents/reject`
-- `MembersController`
-  - `POST /api/members`
-  - `GET /api/members/occupations`
-- `QueueController`
-  - `GET /api/queue`
-  - `POST /api/queue/take`
-  - `POST /api/queue/reset`
-- `ProductCodesController`
-  - `GET /api/productcodes`
-  - `POST /api/productcodes`
-  - `DELETE /api/productcodes/{id}`
-- `SerialCodesController`
-  - `GET /api/serialcodes`
-  - `POST /api/serialcodes`
-  - `DELETE /api/serialcodes/{id}`
-- `PostsController`
-  - `GET /api/posts/{postId}`
-  - `POST /api/posts/{postId}/comments`
-- `ExamQuestionsController`
-  - `GET /api/examquestions`
-  - `POST /api/examquestions`
-  - `DELETE /api/examquestions/{id}`
-- `ExamController`
-  - `GET /api/exam/questions`
-  - `POST /api/exam/submit`
-
-
+- `POST /api/Auth/register`
+- `POST /api/Auth/login`
+- `GET /api/persons`
+- `GET /api/persons/{id}`
+- `POST /api/persons`
+- `GET /api/documents`
+- `POST /api/documents/approve`
+- `POST /api/documents/reject`
+- `POST /api/members`
+- `GET /api/members/occupations`
+- `GET /api/queue`
+- `POST /api/queue/take`
+- `POST /api/queue/reset`
+- `GET /api/productcodes`
+- `POST /api/productcodes`
+- `DELETE /api/productcodes/{id}`
+- `GET /api/serialcodes`
+- `POST /api/serialcodes`
+- `DELETE /api/serialcodes/{id}`
+- `GET /api/posts/{postId}`
+- `POST /api/posts/{postId}/comments`
+- `GET /api/examquestions`
+- `POST /api/examquestions`
+- `DELETE /api/examquestions/{id}`
+- `GET /api/exam/questions`
+- `POST /api/exam/submit`
 ## วิธีรันโปรเจกต์
 
-### 1. รัน Backend
-
-ไปที่
+### รัน Backend
 
 ```powershell
 cd BackEnd\TestTCCBackEnd\TestTCCBackEnd
@@ -160,9 +165,7 @@ Swagger:
 http://localhost:5228/swagger
 ```
 
-### 2. รัน Frontend
-
-ไปที่
+### รัน Frontend
 
 ```powershell
 cd FrontEnd\TestTCCFrontEnd
