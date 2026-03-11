@@ -1,0 +1,70 @@
+<app-page-layout>
+  <div class="card border-success mx-auto" style="max-width: 860px;">
+    <div class="card-header bg-success text-white text-center fw-bold">IT 06-1</div>
+    <div class="card-body">
+
+      <!-- Input + ADD -->
+      <div class="d-flex gap-2 mb-1">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="XXXX-XXXX-XXXX-XXXX"
+          [value]="inputCode"
+          (input)="onInputChange($event)"
+          maxlength="19"
+          style="font-family: monospace; letter-spacing: 1px;"
+        />
+        <button class="btn btn-primary px-4" (click)="add()" [disabled]="isAdding">ADD</button>
+      </div>
+      <div *ngIf="errorMessage" class="text-danger small mb-2">{{ errorMessage }}</div>
+
+      <!-- Table -->
+      <table class="table table-bordered table-hover text-center align-middle mt-3">
+        <thead class="table-info">
+          <tr>
+            <th style="width: 50px;">Id</th>
+            <th>รหัสสินค้า (16 หลัก)</th>
+            <th>บาร์โค้ดสินค้า</th>
+            <th style="width: 80px;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of products; track item.id) {
+            <tr>
+              <td>{{ item.id }}</td>
+              <td style="font-family: monospace;">{{ item.code }}</td>
+              <td>
+                <app-barcode [value]="item.codeRaw" />
+              </td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="openConfirmDelete(item)">ลบ</button>
+              </td>
+            </tr>
+          }
+          @if (products.length === 0) {
+            <tr>
+              <td colspan="4" class="text-muted py-3">ไม่มีข้อมูล</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</app-page-layout>
+
+<!-- Confirm Delete Modal -->
+@if (confirmDeleteId !== null) {
+  <div class="modal-backdrop-custom" (click)="cancelDelete()"></div>
+  <div class="confirm-box card shadow">
+    <div class="card-body text-center py-4 px-4">
+      <p class="mb-4">
+        ต้องการลบข้อมูล รหัสสินค้า <strong>{{ confirmDeleteCode }}</strong> หรือไม่ ?
+      </p>
+      <div class="d-flex justify-content-center gap-3">
+        <button class="btn btn-primary px-4" (click)="confirmDelete()">ตกลง</button>
+        <button class="btn btn-secondary px-4" (click)="cancelDelete()">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+}

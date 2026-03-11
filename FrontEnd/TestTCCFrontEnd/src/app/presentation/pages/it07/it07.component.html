@@ -1,0 +1,84 @@
+<app-page-layout>
+  <div class="card border-success mx-auto" style="max-width: 960px;">
+    <div class="card-header bg-success text-white text-center fw-bold">IT 07-1</div>
+    <div class="card-body">
+
+      <!-- Input + ADD -->
+      <div class="d-flex gap-2 mb-1">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
+          [value]="inputCode"
+          (input)="onInputChange($event)"
+          maxlength="35"
+          style="font-family: monospace; letter-spacing: 1px;"
+        />
+        <button class="btn btn-primary px-4" (click)="add()" [disabled]="isAdding">ADD</button>
+      </div>
+      <div *ngIf="errorMessage" class="text-danger small mb-2">{{ errorMessage }}</div>
+
+      <!-- Table -->
+      <table class="table table-bordered table-hover text-center align-middle mt-3">
+        <thead class="table-info">
+          <tr>
+            <th style="width: 50px;">Id</th>
+            <th>รหัสสินค้า (30 หลัก)</th>
+            <th style="width: 120px;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of serials; track item.id) {
+            <tr>
+              <td>{{ item.id }}</td>
+              <td style="font-family: monospace;">{{ item.code }}</td>
+              <td>
+                <div class="d-flex gap-1 justify-content-center">
+                  <button class="btn btn-success btn-sm" (click)="openQr(item)">QR</button>
+                  <button class="btn btn-danger btn-sm" (click)="openConfirmDelete(item)">ลบ</button>
+                </div>
+              </td>
+            </tr>
+          }
+          @if (serials.length === 0) {
+            <tr>
+              <td colspan="3" class="text-muted py-3">ไม่มีข้อมูล</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</app-page-layout>
+
+<!-- QR Code Modal -->
+@if (qrItem !== null) {
+  <div class="modal-backdrop-custom" (click)="closeQr()"></div>
+  <div class="modal-box card shadow">
+    <div class="card-body text-center py-4 px-4">
+      <h6 class="fw-bold mb-3">QR Code</h6>
+      <p class="text-muted small mb-3" style="font-family: monospace;">{{ qrItem.code }}</p>
+      <div class="d-flex justify-content-center mb-3">
+        <app-qr-code [value]="qrItem.codeRaw" [size]="220" />
+      </div>
+      <button class="btn btn-secondary px-4" (click)="closeQr()">ปิด</button>
+    </div>
+  </div>
+}
+
+<!-- Confirm Delete Modal -->
+@if (confirmDeleteId !== null) {
+  <div class="modal-backdrop-custom" (click)="cancelDelete()"></div>
+  <div class="confirm-box card shadow">
+    <div class="card-body text-center py-4 px-4">
+      <p class="mb-4">
+        ต้องการลบข้อมูล รหัสสินค้า <strong>{{ confirmDeleteCode }}</strong> หรือไม่ ?
+      </p>
+      <div class="d-flex justify-content-center gap-3">
+        <button class="btn btn-primary px-4" (click)="confirmDelete()">ตกลง</button>
+        <button class="btn btn-secondary px-4" (click)="cancelDelete()">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+}

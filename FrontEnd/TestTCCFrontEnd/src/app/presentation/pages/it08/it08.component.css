@@ -1,0 +1,32 @@
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #4a6cf7;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatar.avatar-sm {
+  width: 36px;
+  height: 36px;
+  font-size: 0.9rem;
+}
+
+.comment-input {
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+}
+
+.comment-input:focus {
+  background-color: #e8e8e8;
+  box-shadow: none;
+  border: none;
+}

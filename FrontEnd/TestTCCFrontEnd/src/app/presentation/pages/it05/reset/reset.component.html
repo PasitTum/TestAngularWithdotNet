@@ -1,0 +1,32 @@
+<app-page-layout>
+  <div class="d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 80px);">
+    <div class="card border-success text-center" style="width: 360px;">
+      <div class="card-header bg-success text-white fw-bold">IT 05-3</div>
+      <div class="card-body py-5 px-4">
+
+        <button
+          class="btn btn-primary px-4 mb-4"
+          (click)="resetQueue()"
+          [disabled]="isLoading || isReset"
+        >
+          @if (isLoading) {
+            <span class="spinner-border spinner-border-sm me-1"></span>
+          }
+          ล้างคิว
+        </button>
+
+        <p class="text-muted mb-2">หมายเลขคิวปัจจุบัน</p>
+        <div class="queue-number" [class.text-muted]="isReset">
+          {{ currentQueueNumber || '...' }}
+        </div>
+
+        <div class="mt-4">
+          <button class="btn btn-primary px-4" (click)="goBack()">
+            กลับไปหน้ารับบัตรคิว
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</app-page-layout>

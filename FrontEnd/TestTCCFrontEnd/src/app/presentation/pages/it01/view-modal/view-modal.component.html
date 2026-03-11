@@ -1,0 +1,42 @@
+<div class="modal d-block" tabindex="-1" style="background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-success">
+      <div class="modal-header bg-success text-white justify-content-center py-2">
+        <h6 class="modal-title fw-bold">IT 01-3</h6>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-3 align-items-center">
+          <label class="col-3 col-form-label fw-semibold">ชื่อ - สกุล</label>
+          <div class="col-9 d-flex gap-2">
+            <input type="text" class="form-control" [value]="person.firstName" readonly />
+            <input type="text" class="form-control" [value]="person.lastName" readonly />
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <label class="col-3 col-form-label fw-semibold">วันเกิด</label>
+          <div class="col-9">
+            <input type="text" class="form-control" style="max-width: 200px;" [value]="person.birthDate" readonly />
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+          <label class="col-3 col-form-label fw-semibold">อายุ</label>
+          <div class="col-9">
+            <span>{{ person.age }} ปี</span>
+          </div>
+        </div>
+
+        <div class="row mb-1 align-items-start">
+          <label class="col-3 col-form-label fw-semibold">ที่อยู่</label>
+          <div class="col-9">
+            <textarea class="form-control" rows="3" [value]="person.address" readonly></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="close()">ปิด</button>
+      </div>
+    </div>
+  </div>
+</div>

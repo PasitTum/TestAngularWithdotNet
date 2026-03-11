@@ -1,0 +1,110 @@
+<app-page-layout>
+  <!-- Success toast -->
+  @if (successMessage) {
+    <div class="success-toast" (click)="dismissSuccess()">
+      {{ successMessage }} Id : {{ successId }}
+    </div>
+  }
+
+  <div class="card border-success mx-auto" style="max-width: 700px;">
+    <div class="card-header bg-success text-white text-center fw-bold">IT 04-1</div>
+    <div class="card-body px-4 py-4">
+
+      <!-- Row 1: First Name / Last Name -->
+      <div class="row mb-3">
+        <div class="col-6">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="firstName" name="firstName" />
+          <div *ngIf="errors['firstName']" class="text-danger small mt-1">{{ errors['firstName'] }}</div>
+        </div>
+        <div class="col-6">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="lastName" name="lastName" />
+          <div *ngIf="errors['lastName']" class="text-danger small mt-1">{{ errors['lastName'] }}</div>
+        </div>
+      </div>
+
+      <!-- Row 2: Email / Phone -->
+      <div class="row mb-3">
+        <div class="col-6">
+          <label class="form-label">Email</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="email" name="email" />
+          <div *ngIf="errors['email']" class="text-danger small mt-1">{{ errors['email'] }}</div>
+        </div>
+        <div class="col-6">
+          <label class="form-label">Phone</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="phone" name="phone" placeholder="0812345678" />
+          <div *ngIf="errors['phone']" class="text-danger small mt-1">{{ errors['phone'] }}</div>
+        </div>
+      </div>
+
+      <!-- Row 3: Profile / Birth Day -->
+      <div class="row mb-3">
+        <div class="col-6">
+          <label class="form-label">Profile</label>
+          <div class="input-group input-group-sm">
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              [value]="profileFileName || ''"
+              readonly
+              placeholder="ยังไม่ได้เลือกไฟล์"
+            />
+            <label class="btn btn-secondary btn-sm mb-0">
+              Browse
+              <input type="file" accept="image/*" class="d-none" (change)="onFileChange($event)" />
+            </label>
+          </div>
+          <div *ngIf="errors['profile']" class="text-danger small mt-1">{{ errors['profile'] }}</div>
+        </div>
+        <div class="col-6">
+          <label class="form-label">Birth Day</label>
+          <input type="date" class="form-control form-control-sm" [(ngModel)]="birthDate" name="birthDate" />
+          <div *ngIf="errors['birthDay']" class="text-danger small mt-1">{{ errors['birthDay'] }}</div>
+        </div>
+      </div>
+
+      <!-- Row 4: Occupation -->
+      <div class="row mb-3">
+        <div class="col-12">
+          <label class="form-label">Occupation</label>
+          <select class="form-select form-select-sm" [(ngModel)]="occupationId" name="occupationId">
+            <option [value]="0" disabled>-- กรุณาเลือกอาชีพ --</option>
+            @for (occ of occupations; track occ.id) {
+              <option [value]="occ.id">{{ occ.name }}</option>
+            }
+          </select>
+          <div *ngIf="errors['occupation']" class="text-danger small mt-1">{{ errors['occupation'] }}</div>
+        </div>
+      </div>
+
+      <!-- Row 5: Sex -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <label class="form-label me-3">Sex</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="sex" [value]="0" [(ngModel)]="sex" id="male" />
+            <label class="form-check-label" for="male">Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="sex" [value]="1" [(ngModel)]="sex" id="female" />
+            <label class="form-check-label" for="female">Female</label>
+          </div>
+          <div *ngIf="errors['sex']" class="text-danger small mt-1">{{ errors['sex'] }}</div>
+        </div>
+      </div>
+
+      <!-- Form-level error -->
+      <div *ngIf="errors['form']" class="alert alert-danger py-1 px-2 small mb-3">{{ errors['form'] }}</div>
+
+      <!-- Buttons -->
+      <div class="d-flex justify-content-center gap-3">
+        <button class="btn btn-success px-4" (click)="save()" [disabled]="isLoading">
+          {{ isLoading ? 'กำลังบันทึก...' : 'Save' }}
+        </button>
+        <button class="btn btn-secondary px-4" (click)="clear()">Clear</button>
+      </div>
+
+    </div>
+  </div>
+</app-page-layout>

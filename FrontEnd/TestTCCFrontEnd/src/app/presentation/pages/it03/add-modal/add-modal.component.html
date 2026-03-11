@@ -1,0 +1,23 @@
+<div class="modal-backdrop-custom" (click)="onCancel.emit()"></div>
+<div class="modal-box card border-primary shadow">
+  <div class="card-header bg-primary text-white fw-bold text-center">IT 03-2</div>
+  <div class="card-body px-4 py-3">
+    <h6 class="fw-bold mb-3">เพิ่มรายการใหม่</h6>
+    <div class="mb-3">
+      <label class="form-label">รายละเอียด :</label>
+      <textarea
+        class="form-control"
+        rows="4"
+        [(ngModel)]="title"
+        name="title"
+      ></textarea>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger py-1 px-2 small">{{ errorMessage }}</div>
+    <div class="d-flex justify-content-center gap-2">
+      <button class="btn btn-primary btn-sm px-4" (click)="save()" [disabled]="isLoading">
+        {{ isLoading ? 'กำลังบันทึก...' : 'บันทึก' }}
+      </button>
+      <button class="btn btn-danger btn-sm px-4" (click)="onCancel.emit()">ยกเลิก</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<app-page-layout>
+  <div class="d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 80px);">
+    <div class="card border-success text-center" style="width: 360px;">
+      <div class="card-header bg-success text-white fw-bold">IT 05-1</div>
+      <div class="card-body py-5 px-4">
+
+        @if (isMaxReached) {
+          <div class="alert alert-warning small mb-4">คิวเต็มแล้ว (Z9) กรุณาล้างคิวก่อน</div>
+        }
+
+        <button
+          class="btn btn-take-ticket mb-4"
+          (click)="takeTicket()"
+          [disabled]="isLoading || isMaxReached"
+        >
+          @if (isLoading) {
+            <span class="spinner-border spinner-border-sm me-2"></span>
+          }
+          รับบัตรคิว
+        </button>
+
+        @if (errorMessage) {
+          <div class="alert alert-danger small py-1 mb-3">{{ errorMessage }}</div>
+        }
+
+        <div>
+          <button class="btn btn-secondary px-4" (click)="goToReset()">ล้างคิว</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</app-page-layout>

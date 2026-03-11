@@ -1,0 +1,49 @@
+<app-page-layout>
+  <div class="card border-success mx-auto" style="max-width: 850px;">
+    <div class="card-header bg-success text-white text-center fw-bold">IT 01-1</div>
+    <div class="card-body">
+      <div class="d-flex justify-content-end mb-3">
+        <button class="btn btn-primary btn-sm px-3" (click)="openAddModal()">ADD</button>
+      </div>
+      <table class="table table-bordered table-hover text-center align-middle">
+        <thead class="table-primary">
+          <tr>
+            <th>Id</th>
+            <th>ชื่อ-สกุล</th>
+            <th>ที่อยู่</th>
+            <th>วันเกิด</th>
+            <th>อายุ</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let person of persons">
+            <td>{{ person.id }}</td>
+            <td>{{ person.fullName }}</td>
+            <td>{{ person.address }}</td>
+            <td>{{ person.birthDate }}</td>
+            <td>{{ person.age }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm" (click)="openViewModal(person)">View</button>
+            </td>
+          </tr>
+          <tr *ngIf="persons.length === 0">
+            <td colspan="6" class="text-muted py-3">ไม่มีข้อมูล</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</app-page-layout>
+
+<app-add-modal
+  *ngIf="showAddModal"
+  (onSave)="onPersonAdded($event)"
+  (onCancel)="closeAddModal()"
+></app-add-modal>
+
+<app-view-modal
+  *ngIf="showViewModal && selectedPerson"
+  [person]="selectedPerson!"
+  (onClose)="closeViewModal()"
+></app-view-modal>

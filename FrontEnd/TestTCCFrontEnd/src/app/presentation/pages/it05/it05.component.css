@@ -1,0 +1,21 @@
+.btn-take-ticket {
+  background-color: #0d6efd;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 24px 48px;
+  border-radius: 12px;
+  border: none;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.btn-take-ticket:hover:not(:disabled) {
+  background-color: #0b5ed7;
+  color: white;
+}
+
+.btn-take-ticket:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}

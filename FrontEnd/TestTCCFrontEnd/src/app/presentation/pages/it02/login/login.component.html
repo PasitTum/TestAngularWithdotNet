@@ -1,0 +1,48 @@
+<app-page-layout>
+<div class="d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 80px);">
+  <div class="card border-success" style="width: 320px;">
+    <div class="card-header bg-success text-white text-center fw-bold">IT 02-1</div>
+    <div class="card-body px-4 py-4">
+      <div class="mb-3 row align-items-center">
+        <label class="col-4 col-form-label text-end">User :</label>
+        <div class="col-8">
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            [(ngModel)]="username"
+            name="username"
+            autocomplete="username"
+          />
+        </div>
+      </div>
+      <div class="mb-3 row align-items-center">
+        <label class="col-4 col-form-label text-end">Password :</label>
+        <div class="col-8">
+          <input
+            type="password"
+            class="form-control form-control-sm"
+            [(ngModel)]="password"
+            name="password"
+            autocomplete="current-password"
+          />
+        </div>
+      </div>
+      <div *ngIf="errorMessage" class="alert alert-danger py-1 px-2 mb-3 small">
+        {{ errorMessage }}
+      </div>
+      <div class="text-center mb-2">
+        <button
+          class="btn btn-success btn-sm px-4"
+          (click)="onSubmit()"
+          [disabled]="isLoading"
+        >
+          {{ isLoading ? 'กำลังเข้าสู่ระบบ...' : 'ลงชื่อเข้าใช้งาน' }}
+        </button>
+      </div>
+      <div class="text-center">
+        <a routerLink="/it02/register" class="small text-decoration-none">สมัครสมาชิก</a>
+      </div>
+    </div>
+  </div>
+</div>
+</app-page-layout>

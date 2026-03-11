@@ -1,0 +1,20 @@
+<app-page-layout>
+  <div class="d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 80px);">
+    <div class="card border-success text-center" style="width: 360px;">
+      <div class="card-header bg-success text-white fw-bold">IT 05-2</div>
+      <div class="card-body py-5 px-4">
+
+        <p class="text-muted mb-2">หมายเลขคิว</p>
+        <div class="queue-number">{{ queue?.queueNumber }}</div>
+        <p class="text-muted small mt-3 mb-4">
+          วิธี: นำบัตรคิวนี้ไปยื่นเมื่อถึงคิวของท่าน
+        </p>
+
+        <button class="btn btn-primary px-4" (click)="goBack()">
+          กลับไปหน้ารับบัตรคิว
+        </button>
+
+      </div>
+    </div>
+  </div>
+</app-page-layout>

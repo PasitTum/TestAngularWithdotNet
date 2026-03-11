@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/Test/BackEnd/TestTCCBackEnd/**)",
+      "Bash(npm install bootstrap)",
+      "Bash(xargs grep -l \"IT03\")",
+      "Read(//d/Test/**)",
+      "Bash(npm install jsbarcode @types/jsbarcode --save)",
+      "Bash(npm install jsbarcode)",
+      "Bash(npm install qrcode)",
+      "Bash(npm install @types/qrcode --save-dev)"
+    ],
+    "additionalDirectories": [
+      "D:\\Test\\BackEnd\\TestTCCBackEnd\\TestTCCBackEnd"
+    ]
+  }
+}

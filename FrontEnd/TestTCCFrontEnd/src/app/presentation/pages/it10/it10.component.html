@@ -1,0 +1,100 @@
+<app-page-layout>
+  <div class="container py-3">
+    <div class="card border-dark shadow-sm mx-auto exam-card">
+      <div class="card-header bg-success text-center fw-bold text-dark py-2">
+        {{ result ? 'IT 10-2' : 'IT 10-1' }}
+      </div>
+
+      <div class="card-body px-4 px-md-5 py-4">
+        @if (!result) {
+          <div class="row align-items-center g-2 mb-4">
+            <div class="col-auto">
+              <label for="examineeName" class="col-form-label">ชื่อ-สกุล</label>
+            </div>
+            <div class="col-sm-7 col-md-6">
+              <input
+                id="examineeName"
+                type="text"
+                class="form-control"
+                [(ngModel)]="examineeName"
+                [disabled]="isSubmitting"
+              />
+            </div>
+          </div>
+
+          @for (question of questions; track trackByQuestionId($index, question)) {
+            <div class="mb-4">
+              <p class="mb-2">{{ question.questionNo }}. {{ question.questionText }}</p>
+
+              @for (choice of choiceKeys; track choice) {
+                <div class="form-check mb-2">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    [id]="'question-' + question.id + '-' + choice"
+                    [name]="'question-' + question.id"
+                    [value]="choice"
+                    [(ngModel)]="selectedAnswers[question.id]"
+                    [disabled]="isSubmitting"
+                  />
+                  <label class="form-check-label" [for]="'question-' + question.id + '-' + choice">
+                    {{ getChoiceText(question, choice) }}
+                  </label>
+                </div>
+              }
+            </div>
+          }
+
+          @if (errorMessage) {
+            <div class="alert alert-danger py-2">{{ errorMessage }}</div>
+          }
+
+          <button class="btn btn-primary px-4" (click)="submit()" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'กำลังส่ง...' : 'ส่งข้อสอบ' }}
+          </button>
+        } @else {
+          <div class="row align-items-center g-2 mb-4">
+            <div class="col-auto">
+              <label class="col-form-label">ชื่อ-สกุล</label>
+            </div>
+            <div class="col-sm-7 col-md-6">
+              <input type="text" class="form-control" [value]="result.examineeName" disabled />
+            </div>
+          </div>
+
+          @for (item of result.results; track trackByQuestionId($index, item)) {
+            <div class="mb-4">
+              <p class="mb-2">{{ item.questionNo }}. {{ item.questionText }}</p>
+
+              @for (choice of choiceKeys; track choice) {
+                <div class="form-check mb-2">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    [id]="'result-question-' + item.questionNo + '-' + choice"
+                    [name]="'result-question-' + item.questionNo"
+                    [checked]="item.selectedChoice === choice"
+                    disabled
+                  />
+                  <label
+                    class="form-check-label"
+                    [for]="'result-question-' + item.questionNo + '-' + choice"
+                    [class.fw-bold]="item.selectedChoice === choice"
+                    [class.text-success]="item.correctChoice === choice"
+                  >
+                    {{ getChoiceText(item, choice) }}
+                  </label>
+                </div>
+              }
+            </div>
+          }
+
+          <div class="d-flex flex-column flex-md-row align-items-md-center gap-3 pt-2">
+            <button class="btn btn-primary px-4" (click)="restart()">สอบอีกครั้ง</button>
+            <div>คุณ {{ result.examineeName }} สอบได้คะแนน : {{ result.scoreText }}</div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</app-page-layout>

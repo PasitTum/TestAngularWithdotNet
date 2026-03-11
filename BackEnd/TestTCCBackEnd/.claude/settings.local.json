@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet add package Microsoft.EntityFrameworkCore.Sqlite)",
+      "Bash(dotnet add package Microsoft.EntityFrameworkCore.Design)",
+      "Bash(dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 8.0.*)",
+      "Bash(dotnet add package Microsoft.EntityFrameworkCore.Design --version 8.0.*)",
+      "Bash(dotnet build)",
+      "Bash(dotnet add package BCrypt.Net-Next)",
+      "Bash(dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 8.0.*)"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+<div class="modal-backdrop-custom" (click)="onCancel.emit()"></div>
+<div class="modal-box card border-secondary shadow">
+  <div class="card-header bg-success text-dark fw-bold text-center">{{ pageTitle }}</div>
+  <div class="card-body p-4">
+    <div class="modal-inner border bg-white">
+      <div class="modal-inner-header bg-primary text-white fw-bold px-3 py-1">{{ modalTitle }}</div>
+      <div class="p-3">
+        <div class="mb-3 small text-muted">จำนวนรายการที่เลือก: {{ documents.length }}</div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">เหตุผล :</label>
+          <textarea class="form-control" rows="4" [(ngModel)]="remark" name="remark"></textarea>
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger py-1 px-2 small">{{ errorMessage }}</div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button class="btn btn-primary btn-sm px-3" (click)="submit()" [disabled]="isLoading || documents.length === 0">
+            {{ actionLabel }}
+          </button>
+          <button class="btn btn-danger btn-sm px-3" (click)="onCancel.emit()">ยกเลิก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

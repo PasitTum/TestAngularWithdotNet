@@ -1,0 +1,55 @@
+<app-page-layout>
+  <div class="card border-success mx-auto shadow-sm it03-card">
+    <div class="card-header bg-success text-dark text-center fw-bold">IT 03-1</div>
+    <div class="card-body">
+      <div class="d-flex gap-2 mb-3">
+        <button class="btn btn-success btn-sm px-3" (click)="openActionModal('approve')">อนุมัติ</button>
+        <button class="btn btn-danger btn-sm px-3" (click)="openActionModal('reject')">ไม่อนุมัติ</button>
+      </div>
+
+      <table class="table table-bordered text-center align-middle mb-0">
+        <thead class="table-primary">
+          <tr>
+            <th class="checkbox-col">
+              <input type="checkbox" disabled />
+            </th>
+            <th>รายการ</th>
+            <th>เหตุผล</th>
+            <th>สถานะเอกสาร</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (doc of documents; track doc.id) {
+            <tr>
+              <td>
+                <input
+                  type="checkbox"
+                  [checked]="isSelected(doc.id)"
+                  (change)="toggleSelect(doc.id)"
+                  [disabled]="!isPending(doc)"
+                />
+              </td>
+              <td>{{ doc.title }}</td>
+              <td>{{ doc.remark || 'xxxxx' }}</td>
+              <td [class]="getStatusClass(doc.statusCode)">{{ doc.status }}</td>
+            </tr>
+          }
+
+          @if (documents.length === 0) {
+            <tr>
+              <td colspan="4" class="text-muted py-3">ไม่มีข้อมูล</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</app-page-layout>
+
+<app-approve-modal
+  *ngIf="showApproveModal && selectedDocuments.length > 0"
+  [documents]="selectedDocuments"
+  [mode]="modalMode"
+  (onSave)="onApproveModalSaved()"
+  (onCancel)="closeApproveModal()"
+/>

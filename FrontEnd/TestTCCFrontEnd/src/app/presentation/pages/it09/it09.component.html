@@ -1,0 +1,37 @@
+<app-page-layout>
+  <div class="card border-success mx-auto" style="max-width: 680px;">
+    <div class="card-header bg-success text-white text-center fw-bold">IT 09-1</div>
+    <div class="card-body">
+
+      <!-- Add Button -->
+      <div class="mb-3">
+        <a routerLink="/it09/add" class="btn btn-success">เพิ่มข้อสอบ</a>
+      </div>
+
+      <!-- Question List -->
+      @if (questions.length === 0) {
+        <p class="text-muted text-center py-3">ไม่มีข้อสอบ</p>
+      }
+
+      @for (q of questions; track q.id) {
+        <div class="question-item mb-3 pb-3 border-bottom">
+          <div class="d-flex align-items-start gap-2">
+            <div class="flex-grow-1">
+              <span class="fw-semibold">{{ q.questionNo }}. {{ q.questionText }}</span>
+            </div>
+            <button class="btn btn-danger btn-sm flex-shrink-0" (click)="delete(q.id)">ลบ</button>
+          </div>
+          <div class="mt-2 ps-3">
+            @for (key of choiceKeys; track key; let i = $index) {
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <input type="radio" [name]="'q' + q.id" [id]="'q' + q.id + key" disabled />
+                <label [for]="'q' + q.id + key" class="mb-0">{{ choiceLabel(q)[i] }}</label>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+</app-page-layout>
